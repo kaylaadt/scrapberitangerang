@@ -81,6 +81,8 @@ async def scrap_tangerangkab(keyword,
             timeout=30000
         )
 
+        await page.wait_for_timeout(5000)
+
         tombol = page.locator("#loadMore")
 
         for i in range(jumlah_muat):
