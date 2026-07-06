@@ -52,6 +52,8 @@ async def scrap_tangerangkab(keyword,
     hasil = []
 
     url = f"https://tangerangkab.go.id/pencarian?keyword={keyword}"
+    
+    print("=== MASUK FUNGSI scrap_tangerangkab ===")
 
     async with async_playwright() as p:
 
@@ -64,8 +66,10 @@ async def scrap_tangerangkab(keyword,
         page = await browser.new_page()
 
         await page.goto(url)
+        print("=== BERHASIL BUKA HALAMAN ===")
 
         await page.wait_for_timeout(5000)
+        print("=== SELESAI WAIT 5 DETIK ===")
 
         tombol = page.locator("#loadMore")
 
