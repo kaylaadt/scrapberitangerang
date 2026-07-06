@@ -58,32 +58,14 @@ async def scrap_tangerangkab(keyword,
         browser = await p.chromium.launch(
             headless=True,
             args=["--no-sandbox",
-                  "--disable-dev-shm-usage",
-                  "--disable-blink-features=AutomationControlled"
-            ]
+                  "--disable-dev-shm-usage"]
         )
 
-        context = await browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
-            viewport={"width": 1366, "height": 768}
-        )
+        page = await browser.new_page()
 
-        page = await context.new_page()
-
-        await page.goto(
-            url,
-            wait_until="networkidle",
-            timeout=60000
-        )
-
-        await page.wait_for_selector(
-            "li.search-item",
-            timeout=30000
-        )
+        await page.goto(url)
 
         await page.wait_for_timeout(5000)
-
-        print("Jumlah item:", await page.locator("li.search-item").count())
 
         tombol = page.locator("#loadMore")
 
@@ -108,8 +90,7 @@ async def scrap_tangerangkab(keyword,
 
             except:
                 break
-        print("Jumlah item:", await page.locator("li.search-item").count())
-        
+
         items = page.locator("li.search-item")
 
         total = await items.count()
