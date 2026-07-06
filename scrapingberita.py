@@ -95,6 +95,10 @@ async def scrap_tangerangkab(keyword,
 
         total = await items.count()
 
+        print("=" * 50)
+        print("TOTAL ITEM:", total)
+        print("=" * 50)
+
         for i in range(total):
 
             try:
@@ -108,6 +112,9 @@ async def scrap_tangerangkab(keyword,
                 tanggal_text = await item.locator(
                     "div.date"
                 ).inner_text()
+
+                print("Judul:", judul)
+                print("Tanggal asli:", repr(tanggal_text))
 
                 link = await item.locator(
                     "xpath=ancestor::a"
@@ -132,7 +139,7 @@ async def scrap_tangerangkab(keyword,
 
             except Exception as e:
 
-                print(e)
+                print("ERROR:", e)
 
         await browser.close()
 
