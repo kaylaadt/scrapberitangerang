@@ -83,6 +83,8 @@ async def scrap_tangerangkab(keyword,
 
         await page.wait_for_timeout(5000)
 
+        print("Jumlah item:", await page.locator("li.search-item").count())
+
         tombol = page.locator("#loadMore")
 
         for i in range(jumlah_muat):
@@ -106,7 +108,8 @@ async def scrap_tangerangkab(keyword,
 
             except:
                 break
-
+        print("Jumlah item:", await page.locator("li.search-item").count())
+        
         items = page.locator("li.search-item")
 
         total = await items.count()
