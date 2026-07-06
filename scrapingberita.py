@@ -58,10 +58,17 @@ async def scrap_tangerangkab(keyword,
         browser = await p.chromium.launch(
             headless=True,
             args=["--no-sandbox",
-                  "--disable-dev-shm-usage"]
+                  "--disable-dev-shm-usage",
+                  "--disable-blink-features=AutomationControlled"
+            ]
         )
 
-        page = await browser.new_page()
+        context = await browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+            viewport={"width": 1366, "height": 768}
+        )
+
+        page = await context.new_page()
 
         await page.goto(
             url,
