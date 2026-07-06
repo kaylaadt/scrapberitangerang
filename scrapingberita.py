@@ -52,13 +52,11 @@ async def scrap_tangerangkab(keyword,
     hasil = []
 
     url = f"https://tangerangkab.go.id/pencarian?keyword={keyword}"
-    
-    print("=== MASUK FUNGSI scrap_tangerangkab ===")
 
     async with async_playwright() as p:
 
         browser = await p.chromium.launch(
-            headless=True,
+            headless=False,
             args=["--no-sandbox",
                   "--disable-dev-shm-usage"]
         )
@@ -66,10 +64,8 @@ async def scrap_tangerangkab(keyword,
         page = await browser.new_page()
 
         await page.goto(url)
-        print("=== BERHASIL BUKA HALAMAN ===")
 
         await page.wait_for_timeout(5000)
-        print("=== SELESAI WAIT 5 DETIK ===")
 
         tombol = page.locator("#loadMore")
 
@@ -99,10 +95,6 @@ async def scrap_tangerangkab(keyword,
 
         total = await items.count()
 
-        print("=" * 50)
-        print("TOTAL ITEM:", total)
-        print("=" * 50)
-
         for i in range(total):
 
             try:
@@ -116,9 +108,6 @@ async def scrap_tangerangkab(keyword,
                 tanggal_text = await item.locator(
                     "div.date"
                 ).inner_text()
-
-                print("Judul:", judul)
-                print("Tanggal asli:", repr(tanggal_text))
 
                 link = await item.locator(
                     "xpath=ancestor::a"
@@ -143,7 +132,7 @@ async def scrap_tangerangkab(keyword,
 
             except Exception as e:
 
-                print("ERROR:", e)
+                print(e)
 
         await browser.close()
 
@@ -164,7 +153,7 @@ async def scrap_tangerangnews(keyword,
     async with async_playwright() as p:
 
         browser = await p.chromium.launch(
-            headless=True,
+            headless=False,
             args=[
                 "--no-sandbox",
                 "--disable-dev-shm-usage"
