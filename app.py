@@ -1,3 +1,6 @@
+import os
+os.system("playwright install")
+
 import streamlit as st
 import asyncio
 import pandas as pd
