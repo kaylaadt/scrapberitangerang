@@ -141,7 +141,10 @@ async def scrap_tangerangkab(keyword,
                 print(e)
 
         await browser.close()
-
+        
+    print("Total item:", total)
+    print("Total hasil:", len(hasil))
+                                 
     return hasil
 
 
