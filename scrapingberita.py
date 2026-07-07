@@ -68,6 +68,12 @@ async def scrap_tangerangkab(keyword,
             wait_until="networkidle"
         )
 
+        print("URL :", page.url)
+        print("TITLE :", await page.title())
+
+        content = await page.content()
+        print(content[:1000])   # cukup 1000 karakter
+
         await page.wait_for_selector(
             "li.search-item",
             timeout=30000
@@ -141,9 +147,6 @@ async def scrap_tangerangkab(keyword,
                 print(e)
 
         await browser.close()
-        
-    print("Total item:", total)
-    print("Total hasil:", len(hasil))
                                  
     return hasil
 
