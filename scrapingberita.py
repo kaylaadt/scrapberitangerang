@@ -63,9 +63,15 @@ async def scrap_tangerangkab(keyword,
 
         page = await browser.new_page()
 
-        await page.goto(url)
+        await page.goto(
+            url,
+            wait_until="networkidle"
+        )
 
-        await page.wait_for_timeout(5000)
+        await page.wait_for_selector(
+            "li.search-item",
+            timeout=30000
+        )
 
         tombol = page.locator("#loadMore")
 
