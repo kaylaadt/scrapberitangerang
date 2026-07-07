@@ -61,7 +61,13 @@ async def scrap_tangerangkab(keyword,
                   "--disable-dev-shm-usage"]
         )
 
-        page = await browser.new_page()
+        page = await browser.new_page(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        )
+
+        await page.set_extra_http_headers({
+            "Accept-Language": "id-ID,id;q=0.9",
+        })
 
         await page.goto(
             url,
