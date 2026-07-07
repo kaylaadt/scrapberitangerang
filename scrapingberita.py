@@ -56,7 +56,7 @@ async def scrap_tangerangkab(keyword,
     async with async_playwright() as p:
 
         browser = await p.chromium.launch(
-            headless=True,
+            headless=False,
             args=["--no-sandbox",
                   "--disable-dev-shm-usage"]
         )
