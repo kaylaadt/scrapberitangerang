@@ -67,17 +67,26 @@ async def scrap_tangerangkab(keyword,
             url,
             wait_until="networkidle"
         )
-
-        print("URL :", page.url)
-        print("TITLE :", await page.title())
-
-        content = await page.content()
-        print(content[:1000])   # cukup 1000 karakter
-
-        await page.wait_for_selector(
-            "li.search-item",
-            timeout=30000
-        )
+        
+        try:
+            await page.wait_for_selector(
+                "li.search-item",
+                timeout=30000
+            )
+        
+        except Exception:
+            raise Exception(
+                f"""
+        URL:
+        {page.url}
+        
+        TITLE:
+        {await page.title()}
+        
+        HTML:
+        {(await page.content())[:1500]}
+        """
+            )
 
         tombol = page.locator("#loadMore")
 
