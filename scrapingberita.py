@@ -56,29 +56,16 @@ async def scrap_tangerangkab(keyword,
     async with async_playwright() as p:
 
         browser = await p.chromium.launch(
-            headless=True,
+            headless=False,
             args=["--no-sandbox",
                   "--disable-dev-shm-usage"]
         )
 
-        page = await browser.new_page(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
-        )
+        page = await browser.new_page()
 
-        await page.set_extra_http_headers({
-            "Accept-Language": "id-ID,id;q=0.9",
-        })
+        await page.goto(url)
 
-        await page.goto(
-            url,
-            wait_until="domcontentloaded",
-            timeout=60000
-        )
         await page.wait_for_timeout(5000)
-        
-        print(await page.title())
-        print(page.url)
-        print((await page.content())[:1000])
 
         tombol = page.locator("#loadMore")
 
@@ -148,7 +135,7 @@ async def scrap_tangerangkab(keyword,
                 print(e)
 
         await browser.close()
-                                 
+
     return hasil
 
 
@@ -166,7 +153,7 @@ async def scrap_tangerangnews(keyword,
     async with async_playwright() as p:
 
         browser = await p.chromium.launch(
-            headless=True,
+            headless=False,
             args=[
                 "--no-sandbox",
                 "--disable-dev-shm-usage"
